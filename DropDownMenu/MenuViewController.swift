@@ -40,6 +40,14 @@ class MenuViewController: UIViewController, UITableViewDataSource, UITableViewDe
         }
     }
 
+//    required init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: NSBundle?) {
+//        <#code#>
+//    }
+//
+//    required init(coder aDecoder: NSCoder) {
+//        super.init(nibName: "MenuViewController", bundle: nil)
+//    }
+
     private func removeInActiveViewController(inactiveViewController: UIViewController?) {
         if isViewLoaded() {
             if let inActiveVC = inactiveViewController {
@@ -67,7 +75,7 @@ class MenuViewController: UIViewController, UITableViewDataSource, UITableViewDe
 
         tableView.delegate = self
         tableView.dataSource = self
-        tableView.registerClass(UITableViewCell.self, forHeaderFooterViewReuseIdentifier: "TableViewCell")
+        tableView.registerClass(UITableViewCell.self, forCellReuseIdentifier: "TableViewCell")
         tableView.rowHeight = 50
 
         self.tableViewHeightConstrain.constant = 0
@@ -86,19 +94,35 @@ class MenuViewController: UIViewController, UITableViewDataSource, UITableViewDe
         }
     }
 
-    private func showMenu() {
+    private func hideMenu() {
         UIView.animateWithDuration(0.3) { () -> Void in
             self.tableViewHeightConstrain.constant = 0
             self.tableView.layoutIfNeeded()
         }
     }
 
-    private func hideMenu() {
+    private func showMenu() {
         UIView.animateWithDuration(0.3) { () -> Void in
             let totalHeight = self.tableView.rowHeight * CGFloat(self.tableView.numberOfRowsInSection(0))
             self.tableViewHeightConstrain.constant = totalHeight
             self.tableView.layoutIfNeeded()
         }
+    }
+
+    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return viewControllerArray.count
+    }
+
+    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCellWithIdentifier("TableViewCell", forIndexPath: indexPath) as UITableViewCell
+        cell.textLabel?.text = viewControllerArray[indexPath.row].title
+        return cell
+    }
+
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        tableView.deselectRowAtIndexPath(indexPath, animated: true)
+        activeViewController = viewControllerArray[indexPath.row]
+        hideMenu()
     }
 
 }

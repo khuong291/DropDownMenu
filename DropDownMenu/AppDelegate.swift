@@ -15,7 +15,25 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
-        // Override point for customization after application launch.
+
+        let vc1 = UIViewController()
+        let vc2 = UIViewController()
+        let vc3 = UIViewController()
+
+        vc1.view.backgroundColor = UIColor.redColor()
+        vc2.view.backgroundColor = UIColor.greenColor()
+        vc3.view.backgroundColor = UIColor.blueColor()
+
+        vc1.title = "One"
+        vc2.title = "Two"
+        vc3.title = "Three"
+
+        let menuViewController = MenuViewController(nibName: "MenuViewController", bundle: nil)
+
+        window?.rootViewController = menuViewController
+
+        menuViewController.viewControllers = [vc1, vc2, vc3]
+
         return true
     }
 

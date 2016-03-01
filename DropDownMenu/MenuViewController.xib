@@ -37,6 +37,10 @@
                     <constraints>
                         <constraint firstAttribute="height" constant="120" id="bU9-jN-Kar"/>
                     </constraints>
+                    <connections>
+                        <outlet property="dataSource" destination="-1" id="2aO-Ia-GQ6"/>
+                        <outlet property="delegate" destination="-1" id="l1Z-le-GO3"/>
+                    </connections>
                 </tableView>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="BSf-M9-hkk" userLabel="Active View Container">
                     <rect key="frame" x="0.0" y="163" width="363" height="266"/>
