@@ -64,6 +64,14 @@ class MenuViewController: UIViewController, UITableViewDataSource, UITableViewDe
 
     override func viewDidLoad() {
         super.viewDidLoad()
+
+        tableView.delegate = self
+        tableView.dataSource = self
+        tableView.registerClass(UITableViewCell.self, forHeaderFooterViewReuseIdentifier: "TableViewCell")
+        tableView.rowHeight = 50
+
+        self.tableViewHeightConstrain.constant = 0
+        updateActiveViewController()
     }
 
     override func didReceiveMemoryWarning() {
@@ -71,8 +79,26 @@ class MenuViewController: UIViewController, UITableViewDataSource, UITableViewDe
     }
     
     @IBAction func didTapMenuButton(sender: AnyObject) {
-
+        if tableViewHeightConstrain.constant == 0 {
+            showMenu()
+        } else {
+            hideMenu()
+        }
     }
 
+    private func showMenu() {
+        UIView.animateWithDuration(0.3) { () -> Void in
+            self.tableViewHeightConstrain.constant = 0
+            self.tableView.layoutIfNeeded()
+        }
+    }
+
+    private func hideMenu() {
+        UIView.animateWithDuration(0.3) { () -> Void in
+            let totalHeight = self.tableView.rowHeight * CGFloat(self.tableView.numberOfRowsInSection(0))
+            self.tableViewHeightConstrain.constant = totalHeight
+            self.tableView.layoutIfNeeded()
+        }
+    }
 
 }
