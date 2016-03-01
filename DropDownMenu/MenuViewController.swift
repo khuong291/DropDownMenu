@@ -42,12 +42,24 @@ class MenuViewController: UIViewController, UITableViewDataSource, UITableViewDe
 
     private func removeInActiveViewController(inactiveViewController: UIViewController?) {
         if isViewLoaded() {
-
+            if let inActiveVC = inactiveViewController {
+                inActiveVC.willMoveToParentViewController(nil)
+                inActiveVC.view.removeFromSuperview()
+                inActiveVC.removeFromParentViewController()
+            }
         }
     }
 
     private func updateActiveViewController() {
-        
+        if isViewLoaded() {
+            if let activeVC = activeViewController {
+                addChildViewController(activeVC)
+                activeVC.view.frame = activeViewContainer.bounds
+                activeViewContainer.addSubview((activeViewController?.view)!)
+                navItem.title = activeVC.title
+                activeVC.didMoveToParentViewController(self)
+            }
+        }
     }
 
     override func viewDidLoad() {
